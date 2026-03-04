@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useRef } from "react";
 import { X, Camera, User, Phone, Mail, Check, Loader2 } from "lucide-react";
-import { apiRequest } from "@/lib/api";
+import { apiRequest, BASE_URL } from "@/lib/api";
 
 interface ProfileModalProps {
     user: any;
@@ -104,7 +104,7 @@ export default function ProfileModal({ user, onClose, onUpdate }: ProfileModalPr
                                         <img
                                             src={avatarPreview.startsWith("data:") || avatarPreview.startsWith("http")
                                                 ? avatarPreview
-                                                : `http://localhost:5000${avatarPreview}`}
+                                                : `${BASE_URL}${avatarPreview}`}
                                             alt="Profile"
                                             className="w-full h-full object-cover"
                                         />

@@ -23,6 +23,7 @@ import {
     Copy,
     Forward,
 } from "lucide-react";
+import { BASE_URL } from "@/lib/api";
 
 // Types
 export interface Attachment {
@@ -148,7 +149,7 @@ export default function ChatArea({
                         <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center text-white text-sm font-bold shadow-lg shadow-violet-500/20 overflow-hidden">
                             {chatAvatar && (chatAvatar.startsWith("/") || chatAvatar.startsWith("http")) ? (
                                 <img
-                                    src={chatAvatar.startsWith("http") ? chatAvatar : `http://localhost:5000${chatAvatar}`}
+                                    src={chatAvatar.startsWith("http") ? chatAvatar : `${BASE_URL}${chatAvatar}`}
                                     alt={chatName}
                                     className="w-full h-full object-cover"
                                 />
@@ -510,7 +511,7 @@ function AttachmentPreview({ attachment, isMe }: { attachment: Attachment; isMe:
                 <div className="w-64 h-48 bg-zinc-800 flex items-center justify-center relative group cursor-pointer">
                     {attachment.url ? (
                         <img
-                            src={attachment.url.startsWith('http') ? attachment.url : `http://localhost:5000${attachment.url}`}
+                            src={attachment.url.startsWith('http') ? attachment.url : `${BASE_URL}${attachment.url}`}
                             alt={attachment.name}
                             className="w-full h-full object-cover"
                         />

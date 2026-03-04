@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useRef, useState, useCallback } from "react";
 import { useAuth } from "./AuthContext";
+import { BASE_URL } from "@/lib/api";
 
 interface SocketContextType {
     socket: WebSocket | null;
@@ -22,8 +23,7 @@ export function SocketProvider({ children }: { children: React.ReactNode }) {
     const connect = useCallback(() => {
         if (socketRef.current) return;
 
-        const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-        const wsUrl = `${protocol}//localhost:5000/ws`;
+        const wsUrl = BASE_URL.replace(/^http/, 'ws') + '/ws';
 
         const ws = new WebSocket(wsUrl);
         socketRef.current = ws;

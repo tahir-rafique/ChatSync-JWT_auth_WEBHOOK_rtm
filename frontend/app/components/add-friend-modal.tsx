@@ -10,7 +10,7 @@ import {
     Users,
     Loader2,
 } from "lucide-react";
-import { apiRequest } from "@/lib/api";
+import { apiRequest, BASE_URL } from "@/lib/api";
 import { useToast } from "@/context/ToastContext";
 
 interface SearchUser {
@@ -243,7 +243,7 @@ export default function AddFriendModal({
                                             <div className="w-11 h-11 rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center text-white text-sm font-bold flex-shrink-0 overflow-hidden">
                                                 {user.avatar && (user.avatar.startsWith("/") || user.avatar.startsWith("http")) ? (
                                                     <img
-                                                        src={user.avatar.startsWith("http") ? user.avatar : `http://localhost:5000${user.avatar}`}
+                                                        src={user.avatar.startsWith("http") ? user.avatar : `${BASE_URL}${user.avatar}`}
                                                         alt={user.name}
                                                         className="w-full h-full object-cover"
                                                     />
@@ -308,7 +308,7 @@ export default function AddFriendModal({
                                             <div className="w-11 h-11 rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center text-white text-sm font-bold flex-shrink-0 overflow-hidden">
                                                 {req.from.avatar && (req.from.avatar.startsWith("/") || req.from.avatar.startsWith("http")) ? (
                                                     <img
-                                                        src={req.from.avatar.startsWith("http") ? req.from.avatar : `http://localhost:5000${req.from.avatar}`}
+                                                        src={req.from.avatar.startsWith("http") ? req.from.avatar : `${BASE_URL}${req.from.avatar}`}
                                                         alt={req.from.name}
                                                         className="w-full h-full object-cover"
                                                     />

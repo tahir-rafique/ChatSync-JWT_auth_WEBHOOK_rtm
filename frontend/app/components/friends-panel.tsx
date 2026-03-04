@@ -10,6 +10,7 @@ import {
     Circle,
     Clock,
 } from "lucide-react";
+import { BASE_URL } from "@/lib/api";
 
 export interface Friend {
     id: string;
@@ -144,7 +145,7 @@ export default function FriendsPanel({
                                         <div className="w-11 h-11 rounded-full bg-gradient-to-br from-zinc-600 to-zinc-700 flex items-center justify-center text-white text-sm font-bold overflow-hidden">
                                             {friend.avatar && (friend.avatar.startsWith("/") || friend.avatar.startsWith("http")) ? (
                                                 <img
-                                                    src={friend.avatar.startsWith("http") ? friend.avatar : `http://localhost:5000${friend.avatar}`}
+                                                    src={friend.avatar.startsWith("http") ? friend.avatar : `${BASE_URL}${friend.avatar}`}
                                                     alt={friend.name}
                                                     className="w-full h-full object-cover"
                                                 />

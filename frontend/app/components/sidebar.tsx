@@ -14,6 +14,8 @@ import {
     Archive,
 } from "lucide-react";
 
+import { BASE_URL } from "@/lib/api";
+
 // Types
 export interface ChatUser {
     id: string;
@@ -218,7 +220,7 @@ export default function Sidebar({
                         <div className="w-9 h-9 rounded-full bg-zinc-800 border-2 border-zinc-700 overflow-hidden flex items-center justify-center text-white text-sm font-bold shadow-inner">
                             {user?.avatar && (user.avatar.startsWith("/") || user.avatar.startsWith("http")) ? (
                                 <img
-                                    src={user.avatar.startsWith("http") ? user.avatar : `http://localhost:5000${user.avatar}`}
+                                    src={user.avatar.startsWith("http") ? user.avatar : `${BASE_URL}${user.avatar}`}
                                     alt={user.name}
                                     className="w-full h-full object-cover"
                                 />
@@ -278,7 +280,7 @@ function ChatItem({
                 >
                     {chat.avatar && (chat.avatar.startsWith("/") || chat.avatar.startsWith("http")) ? (
                         <img
-                            src={chat.avatar.startsWith("http") ? chat.avatar : `http://localhost:5000${chat.avatar}`}
+                            src={chat.avatar.startsWith("http") ? chat.avatar : `${BASE_URL}${chat.avatar}`}
                             alt={chat.name}
                             className="w-full h-full object-cover"
                         />
