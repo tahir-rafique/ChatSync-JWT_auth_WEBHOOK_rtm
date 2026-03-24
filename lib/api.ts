@@ -1,6 +1,6 @@
 export const BASE_URL = process.env.NEXT_PUBLIC_API_URL
     ? process.env.NEXT_PUBLIC_API_URL.replace('/api/v1', '')
-    : 'http://localhost:5000';
+    : 'https://chatsync-backend-w3ut.onrender.com';
 
 const API_URL = `${BASE_URL}/api/v1`;
 
