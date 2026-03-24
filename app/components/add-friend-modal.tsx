@@ -11,7 +11,10 @@ import {
     Loader2,
 } from "lucide-react";
 import { apiRequest, BASE_URL } from "@/lib/api";
+import { useAuth } from "@/context/AuthContext";
+import { useSocket } from "@/context/SocketContext";
 import { useToast } from "@/context/ToastContext";
+
 
 interface SearchUser {
     id: string;
@@ -42,6 +45,8 @@ export default function AddFriendModal({
     onRefresh,
 }: AddFriendModalProps) {
     const toast = useToast();
+    const { user: currentUser } = useAuth();
+    const { on, off } = useSocket();
     const [search, setSearch] = useState("");
     const [users, setUsers] = useState<SearchUser[]>([]);
     const [pendingRequests, setPendingRequests] = useState<PendingRequest[]>([]);
@@ -78,40 +83,63 @@ export default function AddFriendModal({
         }
     }, [tab, fetchPending]);
 
-    // Search users with debounce
-    useEffect(() => {
-        const fetchUserData = async () => {
-            setSearching(true);
-            try {
-                // If search is empty, fetch all users, otherwise search by query
-                const endpoint = !search.trim()
-                    ? "/users"
-                    : `/users/search?q=${encodeURIComponent(search)}`;
+    // Fetch all users or search results
+    const fetchUsers = useCallback(async (query: string) => {
+        setSearching(true);
+        try {
+            // If search is empty, fetch all users, otherwise search by query
+            const endpoint = !query.trim()
+                ? "/users"
+                : `/users/search?q=${encodeURIComponent(query)}`;
 
-                const res = await apiRequest(endpoint);
+            const res = await apiRequest(endpoint);
 
-                // Handle different response structures: paginated docs, direct users array, or data itself as array
-                const rawUsers = res.data.docs || res.data.users || (Array.isArray(res.data) ? res.data : []);
+            // Handle different response structures: paginated docs, direct users array, or data itself as array
+            const rawUsers = res.data.docs || res.data.users || (Array.isArray(res.data) ? res.data : []);
 
-                const formatted = rawUsers.map((u: any) => ({
+            const formatted = rawUsers
+                .filter((u: any) => u._id !== currentUser?.id) // Exclude current user
+                .map((u: any) => ({
                     id: u._id,
                     name: u.name,
                     email: u.email,
                     avatar: u.avatar || u.name[0].toUpperCase(),
                     status: u.isFriend ? "friends" : u.isPending ? "pending" : "none",
                 }));
-                setUsers(formatted);
-            } catch (err) {
-                console.error("Fetch users failed:", err);
-            } finally {
-                setSearching(false);
+            setUsers(formatted);
+        } catch (err) {
+            console.error("Fetch users failed:", err);
+        } finally {
+            setSearching(false);
+        }
+    }, [currentUser?.id]);
+
+    // Search users with debounce
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            fetchUsers(search);
+        }, search.trim() ? 500 : 0);
+
+        return () => clearTimeout(timer);
+    }, [search, fetchUsers]);
+
+    // Listen for new user registrations
+    useEffect(() => {
+        const handleNewUser = () => {
+            // Refresh the user list when someone new registers
+            if (!search.trim()) {
+                fetchUsers("");
             }
         };
 
-        const timer = setTimeout(fetchUserData, search.trim() ? 500 : 0);
+        on("USER_REGISTERED", handleNewUser);
+        on("NEW_USER", handleNewUser); // Backup event name
 
-        return () => clearTimeout(timer);
-    }, [search]);
+        return () => {
+            off("USER_REGISTERED", handleNewUser);
+            off("NEW_USER", handleNewUser);
+        };
+    }, [on, off, search, fetchUsers]);
 
     const handleSendRequest = async (userId: string) => {
         try {
