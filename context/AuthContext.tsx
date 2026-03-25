@@ -119,44 +119,42 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
     };
 
-    if (loading) {
-        return (
-            <div className="flex h-screen w-screen items-center justify-center bg-[#0f0c29]">
-                <div className="flex flex-col items-center gap-6">
-                    <div className="relative">
-                        <div className="h-20 w-20 rounded-2xl bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center animate-pulse shadow-2xl shadow-violet-500/40">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                            </svg>
+    const contextValue = {
+        user,
+        loading,
+        isAuthenticated: !!user,
+        login,
+        register,
+        logout,
+        refreshUser,
+    };
+
+    return (
+        <AuthContext.Provider value={contextValue}>
+            {loading ? (
+                <div className="flex h-screen w-screen items-center justify-center bg-[#0f0c29]">
+                    <div className="flex flex-col items-center gap-6">
+                        <div className="relative">
+                            <div className="h-20 w-20 rounded-2xl bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center animate-pulse shadow-2xl shadow-violet-500/40">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                                </svg>
+                            </div>
+                            <div className="absolute inset-0 rounded-2xl bg-white/20 animate-ping opacity-20" />
                         </div>
-                        <div className="absolute inset-0 rounded-2xl bg-white/20 animate-ping opacity-20" />
-                    </div>
-                    <div className="flex flex-col items-center">
-                        <h2 className="text-xl font-bold text-white tracking-widest uppercase">ChatSync</h2>
-                        <div className="mt-2 flex gap-1.5">
-                            {[0, 1, 2].map((i) => (
-                                <div key={i} className="h-1.5 w-1.5 rounded-full bg-violet-400/50 animate-bounce" style={{ animationDelay: `${i * 0.1}s` }} />
-                            ))}
+                        <div className="flex flex-col items-center">
+                            <h2 className="text-xl font-bold text-white tracking-widest uppercase">ChatSync</h2>
+                            <div className="mt-2 flex gap-1.5">
+                                {[0, 1, 2].map((i) => (
+                                    <div key={i} className="h-1.5 w-1.5 rounded-full bg-violet-400/50 animate-bounce" style={{ animationDelay: `${i * 0.1}s` }} />
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        );
-    }
-
-    return (
-        <AuthContext.Provider
-            value={{
-                user,
-                loading,
-                isAuthenticated: !!user,
-                login,
-                register,
-                logout,
-                refreshUser,
-            }}
-        >
-            {children}
+            ) : (
+                children
+            )}
         </AuthContext.Provider>
     );
 }
