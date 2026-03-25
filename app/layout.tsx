@@ -18,6 +18,14 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "ChatSync – Real-time Messaging",
   description: "A modern real-time chat application. Connect with friends, share files, and communicate seamlessly.",
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/icon.png', type: 'image/png' },
+    ],
+    apple: '/icon.png',
+    shortcut: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({
