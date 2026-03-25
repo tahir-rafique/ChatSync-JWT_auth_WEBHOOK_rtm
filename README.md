@@ -1,6 +1,6 @@
 # 💬 ChatSync – Frontend
 
-Real-time chat application frontend built with **Next.js 15 · React 19 · Tailwind CSS 4 · Shadcn UI · WebSockets**
+Real-time chat application frontend built with **Next.js 15 · React 19 · Tailwind CSS 4 · Sass / SCSS · WebSockets**
 
 Backend Live here: 
 https://chatsync-backend-w3ut.onrender.com
@@ -16,7 +16,7 @@ https://chat-sync-frontend.vercel.app
 - **📁 Multi-media Sharing**: Send images, videos, audio files, and documents with ease.
 - **👥 Friend System**: Search users, send/manage friend requests, and see real-time online status.
 - **👤 User Profiles**: Personalized profiles with editable avatars, names, and contact info.
-- **💅 Premium UI/UX**: Modern, responsive design with smooth animations and dark mode support.
+- **💅 Premium UI/UX**: Modern, responsive design with smooth animations and dark mode support, powered by SCSS mixins and Tailwind 4.
 - **🔔 Interactive Feedback**: Real-time notifications for new messages and friend activities.
 
 ---
@@ -38,9 +38,10 @@ ChatSync-Frontend/
 │   │   ├── sidebar.tsx          ← Navigation and conversation list
 │   │   ├── friends-panel.tsx    ← Friend management UI
 │   │   └── ...
-│   ├── globals.css              ← Global styles and Tailwind directives
+│   ├── globals.scss             ← Global styles, SCSS partials, and Tailwind 4 directives
+│   ├── styles/                  ← SCSS partials (animations, mixins, variables, etc.)
 │   └── layout.tsx               ← Root layout
-├── context/                     ← React Context for global state (Auth, Chat)
+├── context/                     ← React Context for global state (Auth, Socket, Toast)
 ├── lib/                         ← Utility functions and API configurations
 ├── public/                      ← Static assets (images, icons)
 ├── package.json                 ← Project dependencies and scripts
@@ -53,8 +54,7 @@ ChatSync-Frontend/
 
 - **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
 - **Library**: [React 19](https://react.dev/)
-- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
-- **Components**: [Shadcn UI](https://ui.shadcn.com/)
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/) & [Sass / SCSS](https://sass-lang.com/)
 - **Icons**: [Lucide React](https://lucide.dev/)
 - **HTTP Client**: [Axios](https://axios-http.com/)
 - **State Management**: React Context API

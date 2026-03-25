@@ -1,0 +1,8 @@
+// _stagger.scss
+
+/* Staggered animation helper */
+@for $i from 1 through 5 {
+  .stagger-#{$i} {
+    animation-delay: #{$i * 0.05}s;
+  }
+}

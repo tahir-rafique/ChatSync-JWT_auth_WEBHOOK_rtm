@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+// Configuration & Mixins
+@import "./styles/variables";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+// Global UI Components & Partials
+@import "./styles/base";
+@import "./styles/scrollbar";
+@import "./styles/animations";
+@import "./styles/stagger";
